@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+PROJECT_ROOT = BASE_DIR
 WORKSPACE = BASE_DIR / "workspace"
 LOGS_DIR = BASE_DIR / "logs"
 MEMORY_DIR = BASE_DIR / "memory"

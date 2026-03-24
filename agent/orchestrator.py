@@ -1,6 +1,6 @@
 from google import genai
-from config.settings import GEMINI_API_KEY, MODEL_NAME, WORKSPACE
-
+from config.settings import GEMINI_API_KEY, MODEL_NAME, WORKSPACE, PROJECT_ROOT
+from tools.git_tool import status as git_status, branch as git_branch, diff as git_diff, add_all as git_add_all, commit as git_commit
 from agent.response_parser import (
     extract_files,
     extract_commands,
@@ -68,6 +68,29 @@ class Orchestrator:
 
         if user_input.strip().lower() == "/status":
             return f"plan_mode={self.plan_mode}"
+
+
+        if user_input.strip().lower() == "/git status":
+            code, out, err = git_status(cwd=PROJECT_ROOT)
+            return out if out else err
+
+        if user_input.strip().lower() == "/git branch":
+            code, out, err = git_branch(cwd=PROJECT_ROOT)
+            return out if out else err
+
+        if user_input.strip().lower() == "/git diff":
+            code, out, err = git_diff(cwd=PROJECT_ROOT)
+            return out if out else err
+
+        if user_input.strip().lower() == "/git add":
+            code, out, err = git_add_all(cwd=PROJECT_ROOT)
+            return out if out else err if err else "git add ejecutado"
+
+        if user_input.strip().lower().startswith("/git commit "):
+            message = user_input.strip()[12:]
+            code, out, err = git_commit(message, cwd=PROJECT_ROOT)
+            return out if out else err if err else "commit realizado"
+
 
         response = self.chat.send_message(user_input)
         text = response.text or ""
