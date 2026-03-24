@@ -1,0 +1,15 @@
+web_system:
+  description: Desarrollo de sistemas web completos
+  tools: [filesystem, command, git, docs]
+
+database:
+  description: Gestión de bases de datos
+  tools: [db, filesystem, docs]
+
+deployment:
+  description: Despliegue a servidores o nube
+  tools: [command, docker, git]
+
+documentation:
+  description: Generación de documentación
+  tools: [docs, filesystem]
